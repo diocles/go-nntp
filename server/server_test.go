@@ -5,19 +5,16 @@ import (
 	"testing"
 )
 
-type rangeExpectation struct {
-	input string
-	low   int64
-	high  int64
-}
-
-var rangeExpectations = []rangeExpectation{
-	rangeExpectation{"", 0, math.MaxInt64},
-	rangeExpectation{"73-", 73, math.MaxInt64},
-	rangeExpectation{"73-1845", 73, 1845},
-}
-
 func TestRangeEmpty(t *testing.T) {
+	var rangeExpectations = []struct {
+		input string
+		low   int64
+		high  int64
+	}{
+		{"", 0, math.MaxInt64},
+		{"73-", 73, math.MaxInt64},
+		{"73-1845", 73, 1845},
+	}
 	for _, e := range rangeExpectations {
 		l, h := parseRange(e.input)
 		if l != e.low {
